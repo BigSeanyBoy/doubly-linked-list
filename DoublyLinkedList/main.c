@@ -15,6 +15,10 @@ struct Node {
     struct Node *next;
 } typedef node;
 
+//void printNode (struct Node *temp) {
+//    printf("%s", temp->message);
+//}
+
 int main() {
     node *head, *tail, *temp;
     
@@ -27,6 +31,18 @@ int main() {
     head->next = NULL;
     
     temp = malloc(sizeof(struct Node));
+    
+    char command;
+    printf("Commands:\n");
+    printf("- Quit: q\n");
+    printf("\n");
+    do {
+        printf("Enter command: ");
+        command = getchar();
+        
+        // Clear remaining characters
+        while((getchar() != '\n' && command != EOF)) { }
+    } while (command != 'q');
     
     free(head);
     free(tail);
