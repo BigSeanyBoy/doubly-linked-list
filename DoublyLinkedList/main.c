@@ -39,9 +39,19 @@ int main() {
     do {
         printf("Enter command: ");
         command = getchar();
+        while ((getchar() != '\n' && command != EOF)) { } // Clear remaining characters
         
-        // Clear remaining characters
-        while((getchar() != '\n' && command != EOF)) { }
+        switch (command) {
+            case 'i':
+                printf("insert\n");
+                break;
+            case 'f':
+                printf("find\n");
+                break;
+            case 'd':
+                printf("delete\n");
+                break;
+        }
     } while (command != 'q');
     
     free(head);
