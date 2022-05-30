@@ -15,6 +15,13 @@ struct Node {
     struct Node *next;
 } typedef node;
 
+void printList (struct Node *current) {
+    while (current != NULL) {
+        printf("%s\n", current->message);
+        current = current->next;
+    }
+}
+
 //void printNode (struct Node *temp) {
 //    printf("%s", temp->message);
 //}
@@ -23,12 +30,19 @@ int main() {
     node *head, *tail, *temp;
     
     head = malloc(sizeof(struct Node));
-    head->previous = NULL;
-    head->message = NULL;
-    
     tail = malloc(sizeof(struct Node));
-    head->message = NULL;
-    head->next = NULL;
+    
+    head->previous = NULL;
+    char *str = "Hello, List!";
+    head->message = (char *)malloc((strlen(str) + 1) * sizeof(char));
+    memcpy(head->message, str, (strlen(str) + 1) * sizeof(char));
+    head->next = tail;
+    
+    tail->previous = head;
+    str = "Goodbye, List!";
+    tail->message = (char *)malloc((strlen(str) + 1) * sizeof(char));
+    memcpy(tail->message, str, (strlen(str) + 1) * sizeof(char));
+    tail->next = NULL;
     
     temp = malloc(sizeof(struct Node));
     
@@ -52,6 +66,7 @@ int main() {
                 printf("delete\n");
                 break;
         }
+        printList(head);
     } while (command != 'q');
     
     free(head);
