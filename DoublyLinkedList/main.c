@@ -17,9 +17,13 @@ struct Node {
 
 void printList (struct Node *current) {
     while (current != NULL) {
-        printf("%s\n", current->message);
+        printf("%s", current->message);
         current = current->next;
+        if (current != NULL) {
+            printf(" <-> ");
+        }
     }
+    printf("\n");
 }
 
 //void printNode (struct Node *temp) {
@@ -48,14 +52,18 @@ int main() {
     
     char command;
     printf("Commands:\n");
-    printf("- Quit: q\n");
+    printf("- q: Quit\n");
+    printf("- p: Print List\n");
     printf("\n");
     do {
         printf("Enter command: ");
         command = getchar();
-        while ((getchar() != '\n' && command != EOF)) { } // Clear remaining characters
+        while ((getchar() != '\n')) { } // Clear remaining characters
         
         switch (command) {
+            case 'p':
+                printList(head);
+                break;
             case 'i':
                 printf("insert\n");
                 break;
@@ -66,7 +74,6 @@ int main() {
                 printf("delete\n");
                 break;
         }
-        printList(head);
     } while (command != 'q');
     
     free(head);
