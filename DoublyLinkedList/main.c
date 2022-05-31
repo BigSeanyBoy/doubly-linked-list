@@ -56,6 +56,37 @@ void insertNode (node *current) {
     new->previous = current;
     new->next = next;
     next->previous = new;
+    
+    printf("Node inserted successfully!\n\n");
+}
+
+void findNode (node *current) {
+    printf("What is the node's position? ");
+    int position;
+    scanf("%d", &position);
+    while ((getchar() != '\n')) { }
+    
+    int i = 0;
+    while (current != NULL && i < position) {
+        current = current->next;
+        i++;
+    }
+    
+    printf("\n");
+    if (current->previous != NULL) {
+        printf("Previous: %s\n", current->previous->message);
+    }
+    else {
+        printf("Previous: NULL\n");
+    }
+    printf("Current:  %s\n", current->message);
+    if (current->next != NULL) {
+        printf("Next:     %s\n", current->next->message);
+    }
+    else {
+        printf("Next:     NULL\n");
+    }
+    printf("\n");
 }
 
 int main() {
@@ -81,11 +112,14 @@ int main() {
     printf("Commands:\n");
     printf("- q: Quit\n");
     printf("- p: Print List\n");
+    printf("- i: Insert Node\n");
+    printf("- f: Find Node\n");
     printf("\n");
     do {
         printf("Enter command: ");
         command = getchar();
         while ((getchar() != '\n')) { } // Clear remaining characters
+        printf("\n");
         
         switch (command) {
             case 'p':
@@ -95,7 +129,7 @@ int main() {
                 insertNode(head);
                 break;
             case 'f':
-                printf("find\n");
+                findNode(head);
                 break;
             case 'd':
                 printf("delete\n");
