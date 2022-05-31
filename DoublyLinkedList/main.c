@@ -15,7 +15,8 @@ struct Node {
     struct Node *next;
 } typedef node;
 
-void printList (struct Node *current) {
+void printList (node *current) {
+    printf("NULL <- ");
     while (current != NULL) {
         printf("%s", current->message);
         current = current->next;
@@ -23,18 +24,46 @@ void printList (struct Node *current) {
             printf(" <-> ");
         }
     }
+    printf(" -> NULL");
     printf("\n");
 }
 
-//void printNode (struct Node *temp) {
-//    printf("%s", temp->message);
-//}
+void insertNode (node *current) {
+    node *new, *next;
+    new = malloc(sizeof(node));
+    
+    next = malloc(sizeof(node));
+    next = current->next;
+    
+    printf("Assign a message to the new node: ");
+    char str[25];
+    scanf("%24[^\n]", str);
+    new->message = (char *)malloc((strlen(str) + 1) * sizeof(char));
+    memcpy(new->message, str, (strlen(str) + 1) * sizeof(char));
+    
+    printf("What position would you like to enter the node? ");
+    int position;
+    scanf("%d", &position);
+    while ((getchar() != '\n')) { }
+    
+    int i = 0;
+    while (current != NULL && i < position - 1) {
+        current = current->next;
+        next = current->next;
+        i++;
+    }
+    current->next = new;
+    new->previous = current;
+    new->next = next;
+    next->previous = new;
+}
 
 int main() {
     node *head, *tail, *temp;
     
-    head = malloc(sizeof(struct Node));
-    tail = malloc(sizeof(struct Node));
+    head = malloc(sizeof(node));
+    tail = malloc(sizeof(node));
+    temp = malloc(sizeof(node));
     
     head->previous = NULL;
     char *str = "Hello, List!";
@@ -47,8 +76,6 @@ int main() {
     tail->message = (char *)malloc((strlen(str) + 1) * sizeof(char));
     memcpy(tail->message, str, (strlen(str) + 1) * sizeof(char));
     tail->next = NULL;
-    
-    temp = malloc(sizeof(struct Node));
     
     char command;
     printf("Commands:\n");
@@ -65,7 +92,7 @@ int main() {
                 printList(head);
                 break;
             case 'i':
-                printf("insert\n");
+                insertNode(head);
                 break;
             case 'f':
                 printf("find\n");
