@@ -17,7 +17,7 @@ struct Node {
 
 node *head, *tail;
 
-void printList (node *current) {
+void printList(node *current) {
     printf("NULL <- ");
     while (current != NULL) {
         printf("%s", current->message);
@@ -30,7 +30,7 @@ void printList (node *current) {
     printf("\n\n");
 }
 
-void insertNode (node *current) {
+void insertNode(node *current) {
     node *new, *next;
     new = malloc(sizeof(node));
     
@@ -70,7 +70,7 @@ void insertNode (node *current) {
     printf("Node inserted successfully!\n\n");
 }
 
-void findNode (node *current) {
+void findNode(node *current) {
     printf("What is the node's position? ");
     int position;
     scanf("%d", &position);
@@ -99,7 +99,7 @@ void findNode (node *current) {
     printf("\n");
 }
 
-void deleteNode (node *current) {
+void deleteNode(node *current) {
     printf("What is the node's position? ");
     int position;
     scanf("%d", &position);
@@ -123,6 +123,13 @@ void deleteNode (node *current) {
     free(current);
     
     printf("Node deleted successfully!\n\n");
+}
+
+void freeList(node *current) {
+    if (current->next != NULL) {
+        freeList(current->next);
+    }
+    free(current);
 }
 
 int main() {
@@ -171,8 +178,7 @@ int main() {
         }
     } while (command != 'q');
     
-    free(head);
-    free(tail);
+    freeList(head);
     
     return 0;
 }
