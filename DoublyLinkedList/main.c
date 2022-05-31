@@ -15,6 +15,8 @@ struct Node {
     struct Node *next;
 } typedef node;
 
+node *head, *tail;
+
 void printList (node *current) {
     printf("NULL <- ");
     while (current != NULL) {
@@ -52,6 +54,14 @@ void insertNode (node *current) {
         next = current->next;
         i++;
     }
+    
+    if (current->previous == NULL) {
+        head = new;
+    }
+    else if (current->next == NULL) {
+        tail = new;
+    }
+    
     current->next = new;
     new->previous = current;
     new->next = next;
@@ -101,6 +111,13 @@ void deleteNode (node *current) {
         i++;
     }
     
+    if (current->previous == NULL) {
+        head = current->next;
+    }
+    else if (current->next == NULL) {
+        tail = current->previous;
+    }
+    
     current->previous->next = current->next;
     current->next->previous = current->previous;
     free(current);
@@ -109,11 +126,8 @@ void deleteNode (node *current) {
 }
 
 int main() {
-    node *head, *tail, *temp;
-    
     head = malloc(sizeof(node));
     tail = malloc(sizeof(node));
-    temp = malloc(sizeof(node));
     
     head->previous = NULL;
     char *str = "Hello, List!";
@@ -159,17 +173,6 @@ int main() {
     
     free(head);
     free(tail);
-    free(temp);
-    
-//    temp->previous = NULL;
-//    char *str = "Hello, List!";
-//    temp->message = (char *)malloc((strlen(str) + 1) * sizeof(char));
-//    memcpy(temp->message, str, (strlen(str) + 1) * sizeof(char));
-//    temp->next = NULL;
-//
-//    printNode(temp);
-//
-//    free(temp->message);
     
     return 0;
 }
