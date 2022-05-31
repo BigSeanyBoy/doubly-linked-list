@@ -25,7 +25,7 @@ void printList (node *current) {
         }
     }
     printf(" -> NULL");
-    printf("\n");
+    printf("\n\n");
 }
 
 void insertNode (node *current) {
@@ -89,6 +89,25 @@ void findNode (node *current) {
     printf("\n");
 }
 
+void deleteNode (node *current) {
+    printf("What is the node's position? ");
+    int position;
+    scanf("%d", &position);
+    while ((getchar() != '\n')) { }
+    
+    int i = 0;
+    while (current != NULL && i < position) {
+        current = current->next;
+        i++;
+    }
+    
+    current->previous->next = current->next;
+    current->next->previous = current->previous;
+    free(current);
+    
+    printf("Node deleted successfully!\n\n");
+}
+
 int main() {
     node *head, *tail, *temp;
     
@@ -114,6 +133,7 @@ int main() {
     printf("- p: Print List\n");
     printf("- i: Insert Node\n");
     printf("- f: Find Node\n");
+    printf("- d: Delete Node\n");
     printf("\n");
     do {
         printf("Enter command: ");
@@ -132,7 +152,7 @@ int main() {
                 findNode(head);
                 break;
             case 'd':
-                printf("delete\n");
+                deleteNode(head);
                 break;
         }
     } while (command != 'q');
